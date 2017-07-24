@@ -11,6 +11,8 @@ class DemoParser implements \ArrayAccess
 
     private $data = [];
 
+    private $fileName;
+
     /**
      * @param string $file
      * @throws \Exception
@@ -27,7 +29,7 @@ class DemoParser implements \ArrayAccess
             throw new \Exception('File not found or unable to read', static::FILE_NOT_READY);
         }
 
-        if ($this->readData($handle, 0, 8) === "HLDEMO") {
+        if ($this->readData($handle, 0, 8) !== "HLDEMO") {
             throw new \Exception('Bad file format', static::BAD_FILE_FORMAT);
         }
 
@@ -58,15 +60,48 @@ class DemoParser implements \ArrayAccess
             }
         }
 
+        $this->fileName = pathinfo($file)['filename'];
+
         $this->data = [
             'demoProtocol' => $this->readInt($handle, 8),
             'netProtocol'  => $this->readInt($handle, 12),
             'mapName'      => $this->readData($handle, 16, 260),
             'clientName'   => $this->readData($handle, 276, 260),
-            'entries'      => $entriesList
+            'entries'      => $entriesList,
+            'startTime'    => $this->getStartDate(),
+            'endTime'      => $this->getEndTime($entriesList),
         ];
 
         fclose($handle);
+    }
+
+    public function getData()
+    {
+        return $this->data;
+    }
+
+    /**
+     * @return bool|\DateTime
+     */
+    private function getStartDate()
+    {
+        if (preg_match("/.+-(\d+)-.+/", $this->fileName, $matches)) {
+            return \DateTime::createFromFormat('ymdHi', $matches[1]);
+        }
+
+        return false;
+    }
+
+    private function getEndTime($entriesList)
+    {
+        $startTime = $this->getStartDate();
+        $playbackTime = intval($entriesList['playback']['fTrackTime']);
+
+        if (!$startTime) {
+            return false;
+        }
+
+        return $startTime->modify('+' . $playbackTime . ' seconds');
     }
 
     private function isValidEntry($entry)
