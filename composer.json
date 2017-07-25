@@ -1,5 +1,5 @@
 {
-    "name": "VitalyArt/hltv-demo-parser",
+    "name": "vitalyart/hltv-demo-parser",
     "description": "Парсер данных с демки HLTV",
     "require": {
         "php": ">=5.6"
