@@ -14,6 +14,7 @@ $demo->getMapName();
 $demo->getClientName();
 $demo->getStartTime();
 $demo->getEndTime();
+
 foreach($demo->getEntries() as $entry) {
     $entry->getTypeString();
     $entry->getType();
