@@ -26,8 +26,8 @@ include '/path/to/hltv-demo-parser/src/bootstrap.php';
 ```
 
 ```php
-$parser = new \VitalyArt\DemoParser();
-$parser->setDemo('/path/to/demo/pub-1609152130-de_dust2_2x2.dem');
+$parser = new \VitalyArt\DemoParser\Parser()
+$parser->setDemoFile('/path/to/demo/pub-1609152130-de_dust2_2x2.dem');
 
 $demo = $parser->getDemo();
 
