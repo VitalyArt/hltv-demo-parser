@@ -1,0 +1,5 @@
+<application>
+  <component name="DockerSettings">
+    <option name="dockerMachinePath" value="docker-machine" />
+  </component>
+</application>
