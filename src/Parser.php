@@ -2,6 +2,7 @@
 
 namespace VitalyArt\DemoParser;
 
+use DateTime;
 use VitalyArt\DemoParser\exceptions\FileNotExistsException;
 use VitalyArt\DemoParser\exceptions\FileNotSpecifiedException;
 use VitalyArt\DemoParser\exceptions\IsNotADemoException;
@@ -20,26 +21,26 @@ class Parser
      * @var string Name of demo file without extension
      */
     private $fileName;
-    
+
     /**
      * @var resource
      */
     private $handle;
-    
+
     /**
      * @var Entry[]
      */
     private $entries;
-    
+
     /**
-     * @var string Path to demo file 
+     * @var string Path to demo file
      */
     private $demoFile;
 
     /**
      * Process
      */
-    private function bootstrap()
+    private function bootstrap(): void
     {
         $this->fileName = pathinfo($this->demoFile, PATHINFO_FILENAME);
         $this->checkFile();
@@ -52,15 +53,15 @@ class Parser
      * Set demo file
      * @param string $demoFile Path to demo file
      */
-    public function setDemoFile($demoFile)
+    public function setDemoFile(string $demoFile): void
     {
         $this->demoFile = $demoFile;
     }
-    
+
     /**
      * Fill demo from data
      */
-    private function fillDemo()
+    private function fillDemo(): void
     {
         $this->demo = new Demo(
             $this->readInt(8),
@@ -72,16 +73,17 @@ class Parser
             $this->getEndTime()
         );
     }
-    
+
     /**
      * @return Demo
      * @throws FileNotSpecifiedException
      */
-    public function getDemo()
+    public function getDemo(): Demo
     {
-        if(!$this->demoFile) {
+        if (!$this->demoFile) {
             throw new FileNotSpecifiedException('No demo file specified');
         }
+
         $this->bootstrap();
         return $this->demo;
     }
@@ -91,27 +93,30 @@ class Parser
      * @throws FileNotExistsException If file not found on file system
      * @throws WrongExtensionException If file extension is not a DEM
      */
-    private function checkFile()
+    private function checkFile(): void
     {
-        if(!is_file($this->demoFile)) {
+        if (!is_file($this->demoFile)) {
             throw new FileNotExistsException("Demo file not found in path {$this->demoFile}");
         }
-        if(pathinfo($this->demoFile, PATHINFO_EXTENSION) !== 'dem') {
+
+        if (pathinfo($this->demoFile, PATHINFO_EXTENSION) !== 'dem') {
             throw new WrongExtensionException("Extension of file {$this->demoFile} is not DEM");
         }
     }
-    
+
     /**
      * @throws NotReadableException If file is not readable
      * @throws IsNotADemoException IF file is a not demo
      */
-    private function handle()
+    private function handle(): void
     {
-        $this->handle = fopen($this->demoFile, "r");
+        $this->handle = fopen($this->demoFile, 'r');
+
         if (!$this->handle) {
             throw new NotReadableException("File {$this->demoFile} is not readable");
         }
-        if ($this->readData(0, 8) !== "HLDEMO") {
+
+        if ($this->readData(0, 8) !== 'HLDEMO') {
             throw new IsNotADemoException("File {$this->demoFile} is not a demo");
         }
     }
@@ -119,17 +124,20 @@ class Parser
     /**
      * @return Entry[]
      */
-    private function getEntries()
+    private function getEntries(): array
     {
-        if($this->entries === null) {
+        if ($this->entries === null) {
             $entriesOffset = $this->readInt(540);
-            $entriesCount = $this->readInt($entriesOffset);
+            $entriesCount  = $this->readInt($entriesOffset);
+
             $this->entries = [];
+
             for ($i = 0; $i < $entriesCount; $i++) {
                 if ($this->readData($entriesOffset + 96 * $i + 4, 64)) {
                     $key = trim($this->readData($entriesOffset + 96 * $i + 4, 64));
-                    $key = mb_convert_case($key, MB_CASE_LOWER, "UTF-8");
-                    $entry = new \VitalyArt\DemoParser\Entry(
+                    $key = mb_convert_case($key, MB_CASE_LOWER, 'UTF-8');
+
+                    $entry = new Entry(
                         $key,
                         $this->readInt($entriesOffset + 96 * $i),
                         $this->readData($entriesOffset + 96 * $i + 4, 64),
@@ -140,115 +148,105 @@ class Parser
                         $this->readInt($entriesOffset + 96 * $i + 84),
                         $this->readInt($entriesOffset + 96 * $i + 88)
                     );
-                    if($this->isValidEntry($entry)) {
+
+                    if ($this->isValidEntry($entry)) {
                         $this->entries[$key] = $entry;
                     }
                 }
             }
         }
+
         return $this->entries;
     }
-    
+
     /**
      * Start time
-     * @return null|\DateTime
+     * @return null|DateTime
      */
-    private function getStartDate()
+    private function getStartDate(): ?DateTime
     {
-        if (preg_match("/.+-(\d+)-.+/", $this->fileName, $matches)) {
-            return \DateTime::createFromFormat('ymdHi', $matches[1]);
+        if (preg_match('/.+-(\d+)-.+/', $this->fileName, $matches)) {
+            return DateTime::createFromFormat('ymdHi', $matches[1]);
         }
+
         return null;
     }
 
     /**
      * End time
-     * @return null|\DateTime
+     * @return null|DateTime
      */
-    private function getEndTime()
+    private function getEndTime(): ?DateTime
     {
         $startTime = $this->getStartDate();
+
         if (!$startTime) {
             return null;
         }
+
         $playbackTime = null;
-        foreach($this->getEntries() as $entry) {
-            if($entry->getTypeString() === 'playback') {
+
+        foreach ($this->getEntries() as $entry) {
+            if ($entry->getTypeString() === 'playback') {
                 $playbackTime = intval($entry->getTrackTime());
                 break;
             }
         }
+
         if ($playbackTime === null) {
             return null;
         }
+
         return $startTime->modify("+ {$playbackTime} seconds");
     }
-    
-    /**
-     * Check entry
-     * @param Entry $entry
-     * @return boolean
-     */
-    private function isValidEntry($entry)
+
+    private function isValidEntry(Entry $entry): bool
     {
         foreach ($entry as $value) {
             if ($value === false) {
                 return false;
             }
         }
+
         return true;
     }
 
-    /**
-     * @param integer $offset
-     * @return bool
-     */
-    private function readInt($offset)
+    private function readInt(int $offset): int
     {
         if (fseek($this->handle, $offset) == -1) {
             return false;
         }
-        $data = unpack("i", fread($this->handle, 4));
+
+        $data = unpack('i', fread($this->handle, 4));
         return $data[1];
     }
 
-    /**
-     * @param resource $file
-     * @param integer $offset
-     * @return bool
-     */
-    private function readUint($file, $offset)
-    {
-        if (fseek($file, $offset) == -1) {
-            return false;
-        }
-        $data = unpack("I", fread($file, 4));
-        return $data[1];
-    }
-
-    /**
-     * @param integer $offset
-     * @return bool
-     */
-    private function readFloat($offset)
+    private function readUint(int $offset): int
     {
         if (fseek($this->handle, $offset) == -1) {
             return false;
         }
-        $data = unpack("f", fread($this->handle, 4));
+
+        $data = unpack('I', fread($this->handle, 4));
         return $data[1];
     }
 
-    /**
-     * @param integer $offset
-     * @param integer $Len
-     * @return string
-     */
-    private function readData($offset, $Len)
+    private function readFloat(int $offset): float
     {
         if (fseek($this->handle, $offset) == -1) {
             return false;
         }
+
+        $data = unpack('f', fread($this->handle, 4));
+        return $data[1];
+    }
+
+    private function readData(int $offset, int $Len): string
+    {
+        if (fseek($this->handle, $offset) == -1) {
+            return false;
+        }
+
         return trim(fread($this->handle, $Len));
     }
 }
