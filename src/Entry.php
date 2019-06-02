@@ -13,7 +13,7 @@ class Entry
     private $frames;
     private $offset;
     private $fileLength;
-    
+
     /**
      * @param string $typeString
      * @param integer $type
@@ -25,7 +25,17 @@ class Entry
      * @param integer $offset
      * @param integer $fileLength
      */
-    public function __construct($typeString, $type, $description, $flags, $CDTrack, $trackTime, $frames, $offset, $fileLength)
+    public function __construct(
+        string $typeString,
+        int $type,
+        string $description,
+        int $flags,
+        string $CDTrack,
+        float $trackTime,
+        int $frames,
+        int $offset,
+        int $fileLength
+    )
     {
         $this->typeString = $typeString;
         $this->type = $type;
@@ -42,16 +52,16 @@ class Entry
      * Entry type
      * @return string
      */
-    public function getTypeString()
+    public function getTypeString(): string
     {
         return $this->typeString;
     }
 
     /**
      * Integer entry type
-     * @return integer
+     * @return int
      */
-    public function getType()
+    public function getType(): int
     {
         return $this->type;
     }
@@ -60,16 +70,16 @@ class Entry
      * Description
      * @return string
      */
-    public function getDescription()
+    public function getDescription(): string
     {
         return $this->description;
     }
 
     /**
      * Flags
-     * @return integer
+     * @return int
      */
-    public function getFlags()
+    public function getFlags(): int
     {
         return $this->flags;
     }
@@ -78,7 +88,7 @@ class Entry
      * CD track
      * @return string
      */
-    public function getCDTrack()
+    public function getCDTrack(): string
     {
         return $this->CDTrack;
     }
@@ -87,34 +97,34 @@ class Entry
      * Track time
      * @return float
      */
-    public function getTrackTime()
+    public function getTrackTime(): float
     {
         return $this->trackTime;
     }
 
     /**
      * Frames
-     * @return integer
+     * @return int
      */
-    public function getFrames()
+    public function getFrames(): int
     {
         return $this->frames;
     }
 
     /**
      * Offset
-     * @return integer
+     * @return int
      */
-    public function getOffset()
+    public function getOffset(): int
     {
         return $this->offset;
     }
 
     /**
      * File length
-     * @return integer
+     * @return int
      */
-    public function getFileLength()
+    public function getFileLength(): int
     {
         return $this->fileLength;
     }

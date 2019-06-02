@@ -1,3 +1,6 @@
 /nbproject
 /.idea
+
 composer.lock
+
+/vendor
