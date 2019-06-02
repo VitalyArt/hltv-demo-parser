@@ -2,8 +2,6 @@
 
 use VitalyArt\DemoParser\Demo;
 use VitalyArt\DemoParser\Entry;
-use VitalyArt\DemoParser\exceptions\FileNotSpecifiedException;
-use VitalyArt\DemoParser\exceptions\WrongExtensionException;
 use VitalyArt\DemoParser\Parser;
 
 class HltvDemoParserTest extends PHPUnit_Framework_TestCase
@@ -17,7 +15,7 @@ class HltvDemoParserTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException FileNotSpecifiedException
+     * @expectedException VitalyArt\DemoParser\exceptions\FileNotSpecifiedException
      */
     public function testNoDemoFileSpecified(): void
     {
@@ -43,7 +41,7 @@ class HltvDemoParserTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException WrongExtensionException
+     * @expectedException VitalyArt\DemoParser\exceptions\WrongExtensionException
      */
     public function testDemoFileWrongExtension(): void
     {
