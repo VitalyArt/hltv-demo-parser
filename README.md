@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/VitalyArt/hltv-demo-parser.svg?branch=master)](https://travis-ci.org/VitalyArt/hltv-demo-parser)
+
 ### HLTV Demo Parser
 
 This package is designed to obtain information from the demo of the servers or games on the Half-Life 1 engine.
