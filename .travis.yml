@@ -1,6 +1,5 @@
 language: php
 php:
-  - 7.2
   - 7.3
   - 7.4
   - hhvm
@@ -8,4 +7,4 @@ php:
 before_install:
   - travis_retry composer self-update
   - composer install
-script: phpunit --testdox --bootstrap vendor/autoload.php tests
+script: ./vendor/phpunit/phpunit/phpunit --testdox --bootstrap vendor/autoload.php tests
