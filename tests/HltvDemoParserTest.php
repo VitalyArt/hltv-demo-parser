@@ -4,7 +4,7 @@ use VitalyArt\DemoParser\Demo;
 use VitalyArt\DemoParser\Entry;
 use VitalyArt\DemoParser\Parser;
 
-class HltvDemoParserTest extends PHPUnit_Framework_TestCase
+class HltvDemoParserTest extends PHPUnit\Framework\TestCase
 {
     /** @var Parser */
     private $parser;
@@ -14,37 +14,32 @@ class HltvDemoParserTest extends PHPUnit_Framework_TestCase
         $this->parser = new Parser();
     }
 
-    /**
-     * @expectedException VitalyArt\DemoParser\exceptions\FileNotSpecifiedException
-     */
     public function testNoDemoFileSpecified(): void
     {
+        $this->expectException(VitalyArt\DemoParser\exceptions\FileNotSpecifiedException::class);
+
         $this->parser->getDemo();
     }
 
-    /**
-     * @expectedException VitalyArt\DemoParser\exceptions\FileNotExistsException
-     */
     public function testDemoFileNotExists(): void
     {
+        $this->expectException(VitalyArt\DemoParser\exceptions\FileNotExistsException::class);
+
         $this->parser->setDemoFile('/invalid/path');
         $this->parser->getDemo();
     }
 
-    /**
-     * @expectedException VitalyArt\DemoParser\exceptions\IsNotADemoException
-     */
     public function testDemoFileIsNotDemo(): void
     {
+        $this->expectException(VitalyArt\DemoParser\exceptions\IsNotADemoException::class);
+
         $this->parser->setDemoFile(__DIR__ . '/demos/no-demo-file.dem');
         $this->parser->getDemo();
     }
 
-    /**
-     * @expectedException VitalyArt\DemoParser\exceptions\WrongExtensionException
-     */
     public function testDemoFileWrongExtension(): void
     {
+        $this->expectException(VitalyArt\DemoParser\exceptions\WrongExtensionException::class);
         $this->parser->setDemoFile(__DIR__ . '/demos/demo-file-with-wrong-extension.txt');
         $this->parser->getDemo();
     }
