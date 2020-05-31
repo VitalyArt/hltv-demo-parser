@@ -5,6 +5,5 @@ php:
   - hhvm
   - nightly
 before_install:
-  - if [ "$SHIPPABLE_PHP_RUNTIME" == "hhvm" ]; then sudo composer self-update; else composer self-update; fi;
   - composer install
 script: ./vendor/phpunit/phpunit/phpunit --testdox --bootstrap vendor/autoload.php tests
