@@ -1,0 +1,55 @@
+name: CI
+on: [push]
+
+jobs:
+  test-php73:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: php-actions/composer@v6
+      - name: PHPUnit Tests
+        uses: php-actions/phpunit@master
+        with:
+          configuration: test/phpunit/phpunit.xml
+          args: --coverage-text
+          version: 9
+          php_version: "7.3"
+
+  test-php74:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: php-actions/composer@v6
+      - name: PHPUnit Tests
+        uses: php-actions/phpunit@master
+        with:
+          configuration: test/phpunit/phpunit.xml
+          args: --coverage-text
+          version: 9
+          php_version: "7.4"
+
+  test-php80:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: php-actions/composer@v6
+      - name: PHPUnit Tests
+        uses: php-actions/phpunit@master
+        with:
+          configuration: test/phpunit/phpunit.xml
+          args: --coverage-text
+          version: 9
+          php_version: "8.0"
+
+  test-php81:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: php-actions/composer@v6
+      - name: PHPUnit Tests
+        uses: php-actions/phpunit@master
+        with:
+          configuration: test/phpunit/phpunit.xml
+          args: --coverage-text
+          version: 9
+          php_version: "8.1"

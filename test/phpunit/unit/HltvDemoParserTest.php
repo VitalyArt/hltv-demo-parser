@@ -1,10 +1,18 @@
 <?php
 
+namespace phpunit\unit;
+
+use DateTime;
+use PHPUnit\Framework\TestCase;
 use VitalyArt\DemoParser\Demo;
 use VitalyArt\DemoParser\Entry;
+use VitalyArt\DemoParser\exceptions\FileNotExistsException;
+use VitalyArt\DemoParser\exceptions\FileNotSpecifiedException;
+use VitalyArt\DemoParser\exceptions\IsNotADemoException;
+use VitalyArt\DemoParser\exceptions\WrongExtensionException;
 use VitalyArt\DemoParser\Parser;
 
-class HltvDemoParserTest extends PHPUnit\Framework\TestCase
+class HltvDemoParserTest extends TestCase
 {
     /** @var Parser */
     private $parser;
@@ -16,14 +24,14 @@ class HltvDemoParserTest extends PHPUnit\Framework\TestCase
 
     public function testNoDemoFileSpecified(): void
     {
-        $this->expectException(VitalyArt\DemoParser\exceptions\FileNotSpecifiedException::class);
+        $this->expectException(FileNotSpecifiedException::class);
 
         $this->parser->getDemo();
     }
 
     public function testDemoFileNotExists(): void
     {
-        $this->expectException(VitalyArt\DemoParser\exceptions\FileNotExistsException::class);
+        $this->expectException(FileNotExistsException::class);
 
         $this->parser->setDemoFile('/invalid/path');
         $this->parser->getDemo();
@@ -31,7 +39,7 @@ class HltvDemoParserTest extends PHPUnit\Framework\TestCase
 
     public function testDemoFileIsNotDemo(): void
     {
-        $this->expectException(VitalyArt\DemoParser\exceptions\IsNotADemoException::class);
+        $this->expectException(IsNotADemoException::class);
 
         $this->parser->setDemoFile(__DIR__ . '/demos/no-demo-file.dem');
         $this->parser->getDemo();
@@ -39,7 +47,7 @@ class HltvDemoParserTest extends PHPUnit\Framework\TestCase
 
     public function testDemoFileWrongExtension(): void
     {
-        $this->expectException(VitalyArt\DemoParser\exceptions\WrongExtensionException::class);
+        $this->expectException(WrongExtensionException::class);
         $this->parser->setDemoFile(__DIR__ . '/demos/demo-file-with-wrong-extension.txt');
         $this->parser->getDemo();
     }
