@@ -1,6 +1,6 @@
 <?php
 
-namespace phpunit;
+namespace phpunit\unit;
 
 use DateTime;
 use PHPUnit\Framework\TestCase;
