@@ -2,7 +2,7 @@
 <phpunit colors="true" bootstrap="../../vendor/autoload.php" verbose="true">
 	<testsuites>
 		<testsuite name="unit">
-			<directory>tests/unit</directory>
+			<file>HltvDemoParserTest.php</file>
 		</testsuite>
 	</testsuites>
 </phpunit>
