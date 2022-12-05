@@ -1,8 +1,8 @@
 {
   "name": "vitalyart/hltv-demo-parser",
-  "description": "Парсер данных с демки HLTV",
+  "description": "This package is designed to obtain information from the demo of the servers or games on the Half-Life 1 engine.",
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.3",
     "ext-mbstring": "*"
   },
   "require-dev": {
