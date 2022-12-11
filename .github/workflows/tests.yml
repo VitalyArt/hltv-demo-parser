@@ -11,7 +11,7 @@ jobs:
         uses: php-actions/phpunit@master
         with:
           configuration: test/phpunit/phpunit.xml
-          args: --coverage-text
+          args: --testdox
           version: 9
           php_version: "7.3"
 
@@ -24,7 +24,7 @@ jobs:
         uses: php-actions/phpunit@master
         with:
           configuration: test/phpunit/phpunit.xml
-          args: --coverage-text
+          args: --testdox
           version: 9
           php_version: "7.4"
 
@@ -37,7 +37,7 @@ jobs:
         uses: php-actions/phpunit@master
         with:
           configuration: test/phpunit/phpunit.xml
-          args: --coverage-text
+          args: --testdox
           version: 9
           php_version: "8.0"
 
@@ -50,6 +50,19 @@ jobs:
         uses: php-actions/phpunit@master
         with:
           configuration: test/phpunit/phpunit.xml
-          args: --coverage-text
+          args: --testdox
           version: 9
           php_version: "8.1"
+
+  test-php82:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: php-actions/composer@v6
+      - name: PHPUnit Tests
+        uses: php-actions/phpunit@master
+        with:
+          configuration: test/phpunit/phpunit.xml
+          args: --testdox
+          version: 9
+          php_version: "8.2"
