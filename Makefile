@@ -6,6 +6,7 @@ run-all-tests:
 	make run-php74-tests
 	make run-php80-tests
 	make run-php81-tests
+	make run-php82-tests
 
 run-php73-tests:
 	docker run --rm -v `pwd`/:/app php:7.3 /app/vendor/phpunit/phpunit/phpunit --testdox --bootstrap /app/vendor/autoload.php /app/test/phpunit
@@ -18,3 +19,6 @@ run-php80-tests:
 
 run-php81-tests:
 	docker run --rm -v `pwd`/:/app php:8.1 /app/vendor/phpunit/phpunit/phpunit --testdox --bootstrap /app/vendor/autoload.php /app/test/phpunit
+
+run-php81-tests:
+	docker run --rm -v `pwd`/:/app php:8.2 /app/vendor/phpunit/phpunit/phpunit --testdox --bootstrap /app/vendor/autoload.php /app/test/phpunit
