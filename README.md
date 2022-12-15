@@ -3,7 +3,7 @@
 ![Packagist PHP Version](https://img.shields.io/packagist/dependency-v/vitalyart/hltv-demo-parser/php?style=flat-square) 
 ![Packagist Version](https://img.shields.io/packagist/v/vitalyart/hltv-demo-parser?style=flat-square)
 ![GitHub repo size](https://img.shields.io/github/repo-size/vitalyart/hltv-demo-parser?style=flat-square)
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/vitalyart/hltv-demo-parser/CI?label=tests&style=flat-square)
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/vitalyart/hltv-demo-parser/tests.yml?branch=master)
 
 This package is designed to obtain information from the demo of the servers or games on the Half-Life 1 engine.
 Installation is possible in two versions:
