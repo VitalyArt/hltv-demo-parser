@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace VitalyArt\DemoParser;
 
 use DateTime;
@@ -13,14 +15,13 @@ class Parser
 {
     /**
      * Demo object
-     * @var Demo
      */
-    private $demo;
+    private Demo $demo;
 
     /**
-     * @var string Name of demo file without extension
+     * Name of demo file without extension
      */
-    private $fileName;
+    private string $fileName;
 
     /**
      * @var resource
@@ -28,14 +29,14 @@ class Parser
     private $handle;
 
     /**
-     * @var Entry[]
+     * @var Entry[]|null
      */
-    private $entries;
+    private array|null $entries = null;
 
     /**
      * @var string Path to demo file
      */
-    private $demoFile;
+    private string $demoFile = '';
 
     /**
      * Process
@@ -63,6 +64,7 @@ class Parser
      */
     private function fillDemo(): void
     {
+//        var_dump($this->getEndTime()); exit;
         $this->demo = new Demo(
             $this->readInt(8),
             $this->readInt(12),
@@ -126,6 +128,8 @@ class Parser
      */
     private function getEntries(): array
     {
+        $globalOffset = 96;
+
         if ($this->entries === null) {
             $entriesOffset = $this->readInt(540);
             $entriesCount  = $this->readInt($entriesOffset);
@@ -133,20 +137,20 @@ class Parser
             $this->entries = [];
 
             for ($i = 0; $i < $entriesCount; $i++) {
-                if ($this->readData($entriesOffset + 96 * $i + 4, 64)) {
-                    $key = trim($this->readData($entriesOffset + 96 * $i + 4, 64));
+                if ($this->readData($entriesOffset + $globalOffset * $i + 4, 64)) {
+                    $key = trim($this->readData($entriesOffset + $globalOffset * $i + 4, 64));
                     $key = mb_convert_case($key, MB_CASE_LOWER, 'UTF-8');
 
                     $entry = new Entry(
                         $key,
-                        $this->readInt($entriesOffset + 96 * $i),
-                        $this->readData($entriesOffset + 96 * $i + 4, 64),
-                        $this->readInt($entriesOffset + 96 * $i + 68),
-                        $this->readInt($entriesOffset + 96 * $i + 72),
-                        $this->readFloat($entriesOffset + 96 * $i + 76),
-                        $this->readInt($entriesOffset + 96 * $i + 80),
-                        $this->readInt($entriesOffset + 96 * $i + 84),
-                        $this->readInt($entriesOffset + 96 * $i + 88)
+                        $this->readInt($entriesOffset + $globalOffset * $i),
+                        $this->readData($entriesOffset + $globalOffset * $i + 4, 64),
+                        $this->readInt($entriesOffset + $globalOffset * $i + 68),
+                        $this->readInt($entriesOffset + $globalOffset * $i + 72),
+                        $this->readFloat($entriesOffset + $globalOffset * $i + 76),
+                        $this->readInt($entriesOffset + $globalOffset * $i + 80),
+                        $this->readInt($entriesOffset + $globalOffset * $i + 84),
+                        $this->readInt($entriesOffset + $globalOffset * $i + 88)
                     );
 
                     if ($this->isValidEntry($entry)) {
@@ -161,9 +165,9 @@ class Parser
 
     /**
      * Start time
-     * @return null|DateTime
+     * @return DateTime|null
      */
-    private function getStartDate(): ?DateTime
+    private function getStartDate(): DateTime|null
     {
         if (preg_match('/.+-(\d+)-.+/', $this->fileName, $matches)) {
             return DateTime::createFromFormat('ymdHi', $matches[1]);
@@ -174,9 +178,9 @@ class Parser
 
     /**
      * End time
-     * @return null|DateTime
+     * @return DateTime|null
      */
-    private function getEndTime(): ?DateTime
+    private function getEndTime(): DateTime|null
     {
         $startTime = $this->getStartDate();
 
@@ -211,7 +215,7 @@ class Parser
         return true;
     }
 
-    private function readInt(int $offset): int
+    private function readInt(int $offset): int|false
     {
         if (fseek($this->handle, $offset) == -1) {
             return false;
@@ -221,7 +225,7 @@ class Parser
         return $data[1];
     }
 
-    private function readUint(int $offset): int
+    private function readUint(int $offset): int|false
     {
         if (fseek($this->handle, $offset) == -1) {
             return false;
@@ -231,7 +235,7 @@ class Parser
         return $data[1];
     }
 
-    private function readFloat(int $offset): float
+    private function readFloat(int $offset): float|false
     {
         if (fseek($this->handle, $offset) == -1) {
             return false;
@@ -241,7 +245,7 @@ class Parser
         return $data[1];
     }
 
-    private function readData(int $offset, int $Len): string
+    private function readData(int $offset, int $Len): string|false
     {
         if (fseek($this->handle, $offset) == -1) {
             return false;

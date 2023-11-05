@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace VitalyArt\DemoParser\exceptions;
 
-class NotReadableException extends \Exception
+class NotReadableException extends ParserException
 {
-    
+
 }

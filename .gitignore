@@ -2,5 +2,6 @@
 /.idea
 
 composer.lock
+example.php
 
 /vendor

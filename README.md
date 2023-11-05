@@ -7,8 +7,7 @@
 
 This package is designed to obtain information from the demo of the servers or games on the Half-Life 1 engine.
 Installation is possible in two versions:
-1. Composer
-To install with composer, either run
+1. Install with composer, either run
 
 ```
 $ php composer.phar require vitalyart/hltv-demo-parser "*"
@@ -21,14 +20,6 @@ or add
 ```
 
 to the ```require``` section of your `composer.json` file.
-
-2. Manual installation (Without composer)
-
-Clone or download package from github and include bootstrap file
-
-```
-include '/path/to/hltv-demo-parser/src/bootstrap.php';
-```
 
 ```php
 $parser = new \VitalyArt\DemoParser\Parser();

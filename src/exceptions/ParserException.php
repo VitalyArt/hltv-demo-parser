@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace VitalyArt\DemoParser\exceptions;
 
-class FileNotExistsException extends ParserException
+class ParserException extends \Exception
 {
 
 }

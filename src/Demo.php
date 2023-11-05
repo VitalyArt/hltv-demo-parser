@@ -1,38 +1,26 @@
 <?php
 
+declare(strict_types=1);
+
 namespace VitalyArt\DemoParser;
 
 use DateTime;
 
-class Demo
+readonly class Demo
 {
-    private $demoProtocol;
-    private $netProtocol;
-    private $mapName;
-    private $clientName;
-    private $entries;
-    private $startTime;
-    private $endTime;
-
     public function __construct(
-        int $demoProtocol,
-        int $netProtocol,
-        string $mapName,
-        string $clientName,
-        array $entries,
-        ?DateTime $startTime,
-        ?DateTime $endTime
+        private int $demoProtocol,
+        private int $netProtocol,
+        private string $mapName,
+        private string $clientName,
+        private array $entries,
+        private DateTime|null $startTime,
+        private DateTime|null $endTime,
     )
     {
-        $this->demoProtocol = $demoProtocol;
-        $this->netProtocol = $netProtocol;
-        $this->mapName = $mapName;
-        $this->clientName = $clientName;
-        $this->entries = $entries;
-        $this->startTime = $startTime;
-        $this->endTime = $endTime;
+
     }
-    
+
     public function getDemoProtocol(): int
     {
         return $this->demoProtocol;
@@ -58,12 +46,12 @@ class Demo
         return $this->entries;
     }
 
-    public function getStartTime(): ?DateTime
+    public function getStartTime(): DateTime|null
     {
         return $this->startTime;
     }
 
-    public function getEndTime(): ?DateTime
+    public function getEndTime(): DateTime|null
     {
         return $this->endTime;
     }
