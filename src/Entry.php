@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace VitalyArt\DemoParser;
 
+use VitalyArt\DemoParser\Enums\EntryTypeEnum;
+
 readonly class Entry
 {
     public function __construct(
-        private string $typeString,
+        private EntryTypeEnum $typeString,
         private int $type,
         private string $description,
         private int $flags,
@@ -24,7 +26,7 @@ readonly class Entry
     /**
      * Entry type
      */
-    public function getTypeString(): string
+    public function getTypeString(): EntryTypeEnum
     {
         return $this->typeString;
     }

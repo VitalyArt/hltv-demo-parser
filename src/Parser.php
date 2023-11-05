@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace VitalyArt\DemoParser;
 
 use DateTime;
-use VitalyArt\DemoParser\exceptions\FileNotExistsException;
-use VitalyArt\DemoParser\exceptions\FileNotSpecifiedException;
-use VitalyArt\DemoParser\exceptions\IsNotADemoException;
-use VitalyArt\DemoParser\exceptions\NotReadableException;
-use VitalyArt\DemoParser\exceptions\WrongExtensionException;
+use VitalyArt\DemoParser\Enums\EntryTypeEnum;
+use VitalyArt\DemoParser\Exceptions\FileNotExistsException;
+use VitalyArt\DemoParser\Exceptions\FileNotSpecifiedException;
+use VitalyArt\DemoParser\Exceptions\IsNotADemoException;
+use VitalyArt\DemoParser\Exceptions\NotReadableException;
+use VitalyArt\DemoParser\Exceptions\WrongExtensionException;
 
 class Parser
 {
@@ -64,7 +65,6 @@ class Parser
      */
     private function fillDemo(): void
     {
-//        var_dump($this->getEndTime()); exit;
         $this->demo = new Demo(
             $this->readInt(8),
             $this->readInt(12),
@@ -138,11 +138,11 @@ class Parser
 
             for ($i = 0; $i < $entriesCount; $i++) {
                 if ($this->readData($entriesOffset + $globalOffset * $i + 4, 64)) {
-                    $key = trim($this->readData($entriesOffset + $globalOffset * $i + 4, 64));
-                    $key = mb_convert_case($key, MB_CASE_LOWER, 'UTF-8');
+                    $typeString = trim($this->readData($entriesOffset + $globalOffset * $i + 4, 64));
+                    $typeString = mb_convert_case($typeString, MB_CASE_LOWER, 'UTF-8');
 
                     $entry = new Entry(
-                        $key,
+                        EntryTypeEnum::from($typeString),
                         $this->readInt($entriesOffset + $globalOffset * $i),
                         $this->readData($entriesOffset + $globalOffset * $i + 4, 64),
                         $this->readInt($entriesOffset + $globalOffset * $i + 68),
@@ -154,7 +154,7 @@ class Parser
                     );
 
                     if ($this->isValidEntry($entry)) {
-                        $this->entries[$key] = $entry;
+                        $this->entries[$typeString] = $entry;
                     }
                 }
             }
@@ -191,7 +191,7 @@ class Parser
         $playbackTime = null;
 
         foreach ($this->getEntries() as $entry) {
-            if ($entry->getTypeString() === 'playback') {
+            if ($entry->getTypeString() === EntryTypeEnum::PLAYBACK) {
                 $playbackTime = intval($entry->getTrackTime());
                 break;
             }

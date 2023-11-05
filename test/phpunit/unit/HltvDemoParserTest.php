@@ -6,10 +6,10 @@ use DateTime;
 use PHPUnit\Framework\TestCase;
 use VitalyArt\DemoParser\Demo;
 use VitalyArt\DemoParser\Entry;
-use VitalyArt\DemoParser\exceptions\FileNotExistsException;
-use VitalyArt\DemoParser\exceptions\FileNotSpecifiedException;
-use VitalyArt\DemoParser\exceptions\IsNotADemoException;
-use VitalyArt\DemoParser\exceptions\WrongExtensionException;
+use VitalyArt\DemoParser\Exceptions\FileNotExistsException;
+use VitalyArt\DemoParser\Exceptions\FileNotSpecifiedException;
+use VitalyArt\DemoParser\Exceptions\IsNotADemoException;
+use VitalyArt\DemoParser\Exceptions\WrongExtensionException;
 use VitalyArt\DemoParser\Parser;
 
 class HltvDemoParserTest extends TestCase
