@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace VitalyArt\DemoParser;
 
-use DateTime;
+use DateTimeImmutable;
 
 readonly class Demo
 {
@@ -14,8 +14,9 @@ readonly class Demo
         private string $mapName,
         private string $clientName,
         private array $entries,
-        private DateTime|null $startTime,
-        private DateTime|null $endTime,
+        private DateTimeImmutable|null $startTime,
+        private DateTimeImmutable|null $endTime,
+        private int|false $duration,
     )
     {
 
@@ -46,13 +47,18 @@ readonly class Demo
         return $this->entries;
     }
 
-    public function getStartTime(): DateTime|null
+    public function getStartTime(): DateTimeImmutable|null
     {
         return $this->startTime;
     }
 
-    public function getEndTime(): DateTime|null
+    public function getEndTime(): DateTimeImmutable|null
     {
         return $this->endTime;
+    }
+
+    public function getDuration(): int|false
+    {
+        return $this->duration;
     }
 }

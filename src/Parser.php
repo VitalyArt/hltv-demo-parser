@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace VitalyArt\DemoParser;
 
 use DateTime;
+use DateTimeImmutable;
 use VitalyArt\DemoParser\Enums\EntryTypeEnum;
 use VitalyArt\DemoParser\Exceptions\FileNotExistsException;
 use VitalyArt\DemoParser\Exceptions\FileNotSpecifiedException;
@@ -72,7 +73,8 @@ class Parser
             $this->readData(276, 260),
             $this->getEntries(),
             $this->getStartDate(),
-            $this->getEndTime()
+            $this->getEndTime(),
+            $this->getDuration(),
         );
     }
 
@@ -165,12 +167,11 @@ class Parser
 
     /**
      * Start time
-     * @return DateTime|null
      */
-    private function getStartDate(): DateTime|null
+    private function getStartDate(): DateTimeImmutable|null
     {
         if (preg_match('/.+-(\d+)-.+/', $this->fileName, $matches)) {
-            return DateTime::createFromFormat('ymdHi', $matches[1]);
+            return DateTimeImmutable::createFromFormat('ymdHi', $matches[1]);
         }
 
         return null;
@@ -178,9 +179,8 @@ class Parser
 
     /**
      * End time
-     * @return DateTime|null
      */
-    private function getEndTime(): DateTime|null
+    private function getEndTime(): DateTimeImmutable|null
     {
         $startTime = $this->getStartDate();
 
@@ -202,6 +202,17 @@ class Parser
         }
 
         return $startTime->modify("+ {$playbackTime} seconds");
+    }
+
+    private function getDuration(): int|false
+    {
+        foreach ($this->getEntries() as $entry) {
+            if ($entry->getTypeString() === EntryTypeEnum::PLAYBACK) {
+                return intval($entry->getTrackTime());
+            }
+        }
+
+        return false;
     }
 
     private function isValidEntry(Entry $entry): bool
@@ -245,12 +256,12 @@ class Parser
         return $data[1];
     }
 
-    private function readData(int $offset, int $Len): string|false
+    private function readData(int $offset, int $len): string|false
     {
         if (fseek($this->handle, $offset) == -1) {
             return false;
         }
 
-        return trim(fread($this->handle, $Len));
+        return trim(fread($this->handle, $len));
     }
 }

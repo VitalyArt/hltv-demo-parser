@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace phpunit\unit;
 
-use DateTime;
+use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 use VitalyArt\DemoParser\Demo;
 use VitalyArt\DemoParser\Entry;
@@ -63,7 +65,7 @@ class HltvDemoParserTest extends TestCase
     {
         $this->setValidDemo();
         $demo = $this->parser->getDemo();
-        $this->assertInstanceOf(DateTime::class, $demo->getStartTime());
+        $this->assertInstanceOf(DateTimeImmutable::class, $demo->getStartTime());
     }
 
     public function testEntriesCount(): void
