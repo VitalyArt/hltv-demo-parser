@@ -33,6 +33,7 @@ $demo->getMapName();
 $demo->getClientName();
 $demo->getStartTime();
 $demo->getEndTime();
+$demo->getDuration();
 
 foreach($demo->getEntries() as $entry) {
     $entry->getTypeString();
