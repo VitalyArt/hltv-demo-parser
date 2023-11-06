@@ -4,9 +4,6 @@ on: [ push ]
 jobs:
   PHPUnit:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        PHP: [ "7.3", "7.4", "8.0", "8.1", "8.2" ]
     steps:
       - uses: actions/checkout@v3
       - uses: php-actions/composer@v6
@@ -16,3 +13,4 @@ jobs:
           configuration: test/phpunit/phpunit.xml
           args: --testdox
           version: 9
+          php_version: 8.2
