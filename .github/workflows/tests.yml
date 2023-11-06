@@ -1,18 +1,18 @@
-name: PHPUnit
-on: [push]
+name: Tests
+on: [ push ]
 
 jobs:
   PHPUnit:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        PHP: [ "7.3", "7.4", "8.0", "8.1", "8.2" ]
     steps:
       - uses: actions/checkout@v3
       - uses: php-actions/composer@v6
+        with:
+          php_version: 8.2
       - name: PHPUnit Tests
         uses: php-actions/phpunit@master
         with:
           configuration: test/phpunit/phpunit.xml
           args: --testdox
           version: 9
+          php_version: 8.2

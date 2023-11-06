@@ -1,26 +1,29 @@
 <?php
 
+declare(strict_types=1);
+
 namespace VitalyArt\DemoParser;
 
 use DateTime;
-use VitalyArt\DemoParser\exceptions\FileNotExistsException;
-use VitalyArt\DemoParser\exceptions\FileNotSpecifiedException;
-use VitalyArt\DemoParser\exceptions\IsNotADemoException;
-use VitalyArt\DemoParser\exceptions\NotReadableException;
-use VitalyArt\DemoParser\exceptions\WrongExtensionException;
+use DateTimeImmutable;
+use VitalyArt\DemoParser\Enums\EntryTypeEnum;
+use VitalyArt\DemoParser\Exceptions\FileNotExistsException;
+use VitalyArt\DemoParser\Exceptions\FileNotSpecifiedException;
+use VitalyArt\DemoParser\Exceptions\IsNotADemoException;
+use VitalyArt\DemoParser\Exceptions\NotReadableException;
+use VitalyArt\DemoParser\Exceptions\WrongExtensionException;
 
 class Parser
 {
     /**
      * Demo object
-     * @var Demo
      */
-    private $demo;
+    private Demo $demo;
 
     /**
-     * @var string Name of demo file without extension
+     * Name of demo file without extension
      */
-    private $fileName;
+    private string $fileName;
 
     /**
      * @var resource
@@ -28,14 +31,14 @@ class Parser
     private $handle;
 
     /**
-     * @var Entry[]
+     * @var Entry[]|null
      */
-    private $entries;
+    private array|null $entries = null;
 
     /**
      * @var string Path to demo file
      */
-    private $demoFile;
+    private string $demoFile = '';
 
     /**
      * Process
@@ -70,7 +73,8 @@ class Parser
             $this->readData(276, 260),
             $this->getEntries(),
             $this->getStartDate(),
-            $this->getEndTime()
+            $this->getEndTime(),
+            $this->getDuration(),
         );
     }
 
@@ -126,6 +130,8 @@ class Parser
      */
     private function getEntries(): array
     {
+        $globalOffset = 96;
+
         if ($this->entries === null) {
             $entriesOffset = $this->readInt(540);
             $entriesCount  = $this->readInt($entriesOffset);
@@ -133,24 +139,24 @@ class Parser
             $this->entries = [];
 
             for ($i = 0; $i < $entriesCount; $i++) {
-                if ($this->readData($entriesOffset + 96 * $i + 4, 64)) {
-                    $key = trim($this->readData($entriesOffset + 96 * $i + 4, 64));
-                    $key = mb_convert_case($key, MB_CASE_LOWER, 'UTF-8');
+                if ($this->readData($entriesOffset + $globalOffset * $i + 4, 64)) {
+                    $typeString = trim($this->readData($entriesOffset + $globalOffset * $i + 4, 64));
+                    $typeString = mb_convert_case($typeString, MB_CASE_LOWER, 'UTF-8');
 
                     $entry = new Entry(
-                        $key,
-                        $this->readInt($entriesOffset + 96 * $i),
-                        $this->readData($entriesOffset + 96 * $i + 4, 64),
-                        $this->readInt($entriesOffset + 96 * $i + 68),
-                        $this->readInt($entriesOffset + 96 * $i + 72),
-                        $this->readFloat($entriesOffset + 96 * $i + 76),
-                        $this->readInt($entriesOffset + 96 * $i + 80),
-                        $this->readInt($entriesOffset + 96 * $i + 84),
-                        $this->readInt($entriesOffset + 96 * $i + 88)
+                        EntryTypeEnum::from($typeString),
+                        $this->readInt($entriesOffset + $globalOffset * $i),
+                        $this->readData($entriesOffset + $globalOffset * $i + 4, 64),
+                        $this->readInt($entriesOffset + $globalOffset * $i + 68),
+                        $this->readInt($entriesOffset + $globalOffset * $i + 72),
+                        $this->readFloat($entriesOffset + $globalOffset * $i + 76),
+                        $this->readInt($entriesOffset + $globalOffset * $i + 80),
+                        $this->readInt($entriesOffset + $globalOffset * $i + 84),
+                        $this->readInt($entriesOffset + $globalOffset * $i + 88)
                     );
 
                     if ($this->isValidEntry($entry)) {
-                        $this->entries[$key] = $entry;
+                        $this->entries[$typeString] = $entry;
                     }
                 }
             }
@@ -161,12 +167,11 @@ class Parser
 
     /**
      * Start time
-     * @return null|DateTime
      */
-    private function getStartDate(): ?DateTime
+    private function getStartDate(): DateTimeImmutable|null
     {
         if (preg_match('/.+-(\d+)-.+/', $this->fileName, $matches)) {
-            return DateTime::createFromFormat('ymdHi', $matches[1]);
+            return DateTimeImmutable::createFromFormat('ymdHi', $matches[1]);
         }
 
         return null;
@@ -174,9 +179,8 @@ class Parser
 
     /**
      * End time
-     * @return null|DateTime
      */
-    private function getEndTime(): ?DateTime
+    private function getEndTime(): DateTimeImmutable|null
     {
         $startTime = $this->getStartDate();
 
@@ -187,7 +191,7 @@ class Parser
         $playbackTime = null;
 
         foreach ($this->getEntries() as $entry) {
-            if ($entry->getTypeString() === 'playback') {
+            if ($entry->getTypeString() === EntryTypeEnum::PLAYBACK) {
                 $playbackTime = intval($entry->getTrackTime());
                 break;
             }
@@ -198,6 +202,17 @@ class Parser
         }
 
         return $startTime->modify("+ {$playbackTime} seconds");
+    }
+
+    private function getDuration(): int|false
+    {
+        foreach ($this->getEntries() as $entry) {
+            if ($entry->getTypeString() === EntryTypeEnum::PLAYBACK) {
+                return intval($entry->getTrackTime());
+            }
+        }
+
+        return false;
     }
 
     private function isValidEntry(Entry $entry): bool
@@ -211,7 +226,7 @@ class Parser
         return true;
     }
 
-    private function readInt(int $offset): int
+    private function readInt(int $offset): int|false
     {
         if (fseek($this->handle, $offset) == -1) {
             return false;
@@ -221,7 +236,7 @@ class Parser
         return $data[1];
     }
 
-    private function readUint(int $offset): int
+    private function readUint(int $offset): int|false
     {
         if (fseek($this->handle, $offset) == -1) {
             return false;
@@ -231,7 +246,7 @@ class Parser
         return $data[1];
     }
 
-    private function readFloat(int $offset): float
+    private function readFloat(int $offset): float|false
     {
         if (fseek($this->handle, $offset) == -1) {
             return false;
@@ -241,12 +256,12 @@ class Parser
         return $data[1];
     }
 
-    private function readData(int $offset, int $Len): string
+    private function readData(int $offset, int $len): string|false
     {
         if (fseek($this->handle, $offset) == -1) {
             return false;
         }
 
-        return trim(fread($this->handle, $Len));
+        return trim(fread($this->handle, $len));
     }
 }

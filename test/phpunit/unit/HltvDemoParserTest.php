@@ -1,15 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace phpunit\unit;
 
-use DateTime;
+use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 use VitalyArt\DemoParser\Demo;
 use VitalyArt\DemoParser\Entry;
-use VitalyArt\DemoParser\exceptions\FileNotExistsException;
-use VitalyArt\DemoParser\exceptions\FileNotSpecifiedException;
-use VitalyArt\DemoParser\exceptions\IsNotADemoException;
-use VitalyArt\DemoParser\exceptions\WrongExtensionException;
+use VitalyArt\DemoParser\Exceptions\FileNotExistsException;
+use VitalyArt\DemoParser\Exceptions\FileNotSpecifiedException;
+use VitalyArt\DemoParser\Exceptions\IsNotADemoException;
+use VitalyArt\DemoParser\Exceptions\WrongExtensionException;
 use VitalyArt\DemoParser\Parser;
 
 class HltvDemoParserTest extends TestCase
@@ -63,7 +65,7 @@ class HltvDemoParserTest extends TestCase
     {
         $this->setValidDemo();
         $demo = $this->parser->getDemo();
-        $this->assertInstanceOf(DateTime::class, $demo->getStartTime());
+        $this->assertInstanceOf(DateTimeImmutable::class, $demo->getStartTime());
     }
 
     public function testEntriesCount(): void

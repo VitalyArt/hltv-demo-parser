@@ -1,65 +1,38 @@
 <?php
 
+declare(strict_types=1);
+
 namespace VitalyArt\DemoParser;
 
-class Entry
-{
-    private $typeString;
-    private $type;
-    private $description;
-    private $flags;
-    private $CDTrack;
-    private $trackTime;
-    private $frames;
-    private $offset;
-    private $fileLength;
+use VitalyArt\DemoParser\Enums\EntryTypeEnum;
 
-    /**
-     * @param string $typeString
-     * @param integer $type
-     * @param string $description
-     * @param integer $flags
-     * @param string $CDTrack
-     * @param float $trackTime
-     * @param integer $frames
-     * @param integer $offset
-     * @param integer $fileLength
-     */
+readonly class Entry
+{
     public function __construct(
-        string $typeString,
-        int $type,
-        string $description,
-        int $flags,
-        string $CDTrack,
-        float $trackTime,
-        int $frames,
-        int $offset,
-        int $fileLength
+        private EntryTypeEnum $typeString,
+        private int $type,
+        private string $description,
+        private int $flags,
+        private int $CDTrack,
+        private float $trackTime,
+        private int $frames,
+        private int $offset,
+        private int $fileLength,
     )
     {
-        $this->typeString = $typeString;
-        $this->type = $type;
-        $this->description = $description;
-        $this->flags = $flags;
-        $this->CDTrack = $CDTrack;
-        $this->trackTime = $trackTime;
-        $this->frames = $frames;
-        $this->offset = $offset;
-        $this->fileLength = $fileLength;
+
     }
 
     /**
      * Entry type
-     * @return string
      */
-    public function getTypeString(): string
+    public function getTypeString(): EntryTypeEnum
     {
         return $this->typeString;
     }
 
     /**
      * Integer entry type
-     * @return int
      */
     public function getType(): int
     {
@@ -68,7 +41,6 @@ class Entry
 
     /**
      * Description
-     * @return string
      */
     public function getDescription(): string
     {
@@ -77,7 +49,6 @@ class Entry
 
     /**
      * Flags
-     * @return int
      */
     public function getFlags(): int
     {
@@ -86,7 +57,6 @@ class Entry
 
     /**
      * CD track
-     * @return string
      */
     public function getCDTrack(): string
     {
@@ -95,7 +65,6 @@ class Entry
 
     /**
      * Track time
-     * @return float
      */
     public function getTrackTime(): float
     {
@@ -104,7 +73,6 @@ class Entry
 
     /**
      * Frames
-     * @return int
      */
     public function getFrames(): int
     {
@@ -113,7 +81,6 @@ class Entry
 
     /**
      * Offset
-     * @return int
      */
     public function getOffset(): int
     {
@@ -122,7 +89,6 @@ class Entry
 
     /**
      * File length
-     * @return int
      */
     public function getFileLength(): int
     {

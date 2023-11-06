@@ -5,7 +5,7 @@
     "GPL-3.0-or-later"
   ],
   "require": {
-    "php": ">=7.3",
+    "php": "^8.2",
     "ext-mbstring": "*"
   },
   "require-dev": {
