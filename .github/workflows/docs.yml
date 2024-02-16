@@ -12,6 +12,11 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      - name: Build
-        uses: actions/setup-node@v4
-      - run: ./deploy-docs.sh
+      - name: vuepress-deploy
+        uses: jenkey2011/vuepress-deploy@master
+        env:
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          TARGET_REPO: VitalyArt/hltv-demo-parser
+          TARGET_BRANCH: master
+          BUILD_SCRIPT: build ci && npm run docs:build
+          BUILD_DIR: docs/.vuepress/dist/
