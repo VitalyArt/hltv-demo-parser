@@ -58,7 +58,7 @@ readonly class Entry
     /**
      * CD track
      */
-    public function getCDTrack(): string
+    public function getCDTrack(): int
     {
         return $this->CDTrack;
     }

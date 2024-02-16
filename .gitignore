@@ -5,3 +5,9 @@ composer.lock
 example.php
 
 /vendor
+/node_modules
+
+# VuePress
+.vuepress/.temp
+.vuepress/.cache
+.vuepress/dist
