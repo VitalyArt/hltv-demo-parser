@@ -1,0 +1,27 @@
+{
+  "name": "hltv-demo-parser",
+  "version": "3.0.0",
+  "description": "This package is designed to obtain information from the demo of the servers or games on the Half-Life 1 engine",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs",
+    "test": "test"
+  },
+  "scripts": {
+    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress build docs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VitalyArt/hltv-demo-parser.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/VitalyArt/hltv-demo-parser/issues"
+  },
+  "homepage": "https://github.com/VitalyArt/hltv-demo-parser#readme",
+  "devDependencies": {
+    "vuepress": "^1.9.10"
+  }
+}

@@ -42,6 +42,9 @@ readonly class Demo
         return $this->clientName;
     }
 
+    /**
+     * @return Entry[]
+     */
     public function getEntries(): array
     {
         return $this->entries;
