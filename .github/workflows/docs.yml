@@ -3,7 +3,7 @@ name: Docs
 on:
   push:
     branches:
-      - master
+      - docs-debug
 
 jobs:
   deploy:
@@ -17,6 +17,6 @@ jobs:
         env:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           TARGET_REPO: VitalyArt/hltv-demo-parser
-          TARGET_BRANCH: master
+          TARGET_BRANCH: docs-debug
           BUILD_SCRIPT: npm ci && npm run docs:build
           BUILD_DIR: docs/.vuepress/dist/
