@@ -10,13 +10,25 @@ jobs:
     name: Deploy
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - name: Checkout code
         uses: actions/checkout@v4
-      - name: vuepress-deploy
-        uses: jenkey2011/vuepress-deploy@master
+
+      - name: Build
+        uses: actions/setup-node@v4
+
+      - run: npm ci
+      - run: npm run docs:build
+
+      - name: Deploy to GitHub Pages
+        uses: crazy-max/ghaction-github-pages@v4
+        with:
+          # deploy to gh-pages branch
+          target_branch: gh-pages
+          # deploy the default output dir of VuePress
+          build_dir: docs/.vuepress/dist
         env:
-          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-          TARGET_REPO: VitalyArt/hltv-demo-parser
-          TARGET_BRANCH: docs-debug
-          BUILD_SCRIPT: npm ci && npm run docs:build
-          BUILD_DIR: docs/.vuepress/dist/
+          # @see https://docs.github.com/en/actions/reference/authentication-in-a-workflow#about-the-github_token-secret
+          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
