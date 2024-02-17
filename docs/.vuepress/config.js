@@ -1,6 +1,6 @@
 module.exports = {
   pagePatterns: ['*.md'],
-  base: '/hltv-demo-parser',
+  base: '/hltv-demo-parser/',
   title: 'HTLV Demo Parser',
   description: 'This package is designed to obtain information from the demo of the servers or games on the Half-Life 1 engine',
   themeConfig: {
