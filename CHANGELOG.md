@@ -1,3 +1,8 @@
+# v3.0.1
+- Fixed the return type in `Entry::getCDTrack()`
+- New documentation on GitHub Pages
+- Added the changelog to the documentation
+
 # v3.0.0
 
 ### Compatibility-breaking changes:
