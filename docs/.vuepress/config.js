@@ -1,10 +1,10 @@
 module.exports = {
   pagePatterns: ['*.md'],
-  base: process.env.DOCS_BASE || '/',
+  base: '/hltv-demo-parser/',
   title: 'HLTV Demo Parser',
   description: 'Parse GoldSrc engine demo files (Half-Life, CS 1.6, TFC, DoD) with PHP',
   head: [
-    ['link', { rel: 'icon', href: (process.env.DOCS_BASE || '/') + 'logo.svg' }],
+    ['link', { rel: 'icon', href: '/logo.svg' }],
   ],
   themeConfig: {
     logo: '/logo.svg',
