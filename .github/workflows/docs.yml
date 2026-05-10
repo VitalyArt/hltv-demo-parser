@@ -22,7 +22,7 @@ jobs:
 
       # Building the project
       - run: npm ci
-      - run: npm run docs:build
+      - run: DOCS_BASE=/hltv-demo-parser/ npm run docs:build
 
       - name: Deploy to GitHub Pages
         uses: crazy-max/ghaction-github-pages@v4
