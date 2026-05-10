@@ -1,13 +1,20 @@
-## Install with composer, either run
+## Requirements
+
+- PHP 8.2 or higher
+- `ext-mbstring` (multibyte string extension)
+
+## Install with Composer
+
+Either run:
 
 ```shell
-$ php composer.phar require vitalyart/hltv-demo-parser "*"
+$ composer require vitalyart/hltv-demo-parser "*"
 ```
 
-or add
+or add:
 
 ```json
 "vitalyart/hltv-demo-parser": "*"
 ```
 
-to the ```require``` section of your `composer.json` file.
+to the `require` section of your `composer.json` file and run `composer install`.

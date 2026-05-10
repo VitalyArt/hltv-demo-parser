@@ -1,7 +1,7 @@
 module.exports = {
   pagePatterns: ['*.md'],
   base: '/hltv-demo-parser/',
-  title: 'HTLV Demo Parser',
+  title: 'HLTV Demo Parser',
   description: 'This package is designed to obtain information from the demo of the servers or games on the Half-Life 1 engine',
   themeConfig: {
     displayAllHeaders: true, // Default: false
@@ -30,10 +30,28 @@ module.exports = {
         sidebarDepth: 1,        // optional, defaults to 1
       },
       {
+        title: 'Error Handling',
+        path: 'errors.html',
+        collapsable: false,
+        sidebarDepth: 1,
+      },
+      {
+        title: 'Demo Formats',
+        path: 'formats.html',
+        collapsable: false,
+        sidebarDepth: 1,
+      },
+      {
+        title: 'Contributing',
+        path: 'contributing.html',
+        collapsable: false,
+        sidebarDepth: 1,
+      },
+      {
         title: 'Changelog',
-        path: 'changelog.html', // optional, link of the title, which should be an absolute path and must exist
-        collapsable: false,     // optional, defaults to true
-        sidebarDepth: 1,        // optional, defaults to 1
+        path: 'changelog.html',
+        collapsable: false,
+        sidebarDepth: 1,
       },
     ]
   },

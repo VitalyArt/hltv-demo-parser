@@ -1,3 +1,6 @@
+# v3.0.2
+- Refactor Parser: add constants, fix type safety, improve tests
+
 # v3.0.1
 - Fixed the return type in `Entry::getCDTrack()`
 - New documentation on GitHub Pages
