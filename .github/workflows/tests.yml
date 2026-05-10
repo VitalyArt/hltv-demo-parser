@@ -5,7 +5,7 @@ jobs:
   PHPUnit:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: php-actions/composer@v6
         with:
           php_version: 8.2
@@ -16,3 +16,5 @@ jobs:
           args: --testdox
           version: 9
           php_version: 8.2
+      - name: PHPStan
+        run: ./vendor/bin/phpstan analyse

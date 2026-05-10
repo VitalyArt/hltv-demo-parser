@@ -7,6 +7,9 @@ example.php
 /vendor
 /node_modules
 
+# PHPUnit
+.phpunit.result.cache
+
 # VuePress
 .vuepress/.temp
 .vuepress/.cache

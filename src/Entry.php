@@ -9,8 +9,8 @@ use VitalyArt\DemoParser\Enums\EntryTypeEnum;
 readonly class Entry
 {
     public function __construct(
-        private EntryTypeEnum $typeString,
-        private int $type,
+        private EntryTypeEnum $type,
+        private int $typeNumber,
         private string $description,
         private int $flags,
         private int $CDTrack,
@@ -28,7 +28,7 @@ readonly class Entry
      */
     public function getTypeString(): EntryTypeEnum
     {
-        return $this->typeString;
+        return $this->type;
     }
 
     /**
@@ -36,7 +36,7 @@ readonly class Entry
      */
     public function getType(): int
     {
-        return $this->type;
+        return $this->typeNumber;
     }
 
     /**

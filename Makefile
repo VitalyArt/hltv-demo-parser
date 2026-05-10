@@ -5,23 +5,15 @@ composer-install:
 	docker run --rm -v `pwd`/:/app composer:2 composer install
 
 run-all-tests:
-	make run-php73-tests
-	make run-php74-tests
-	make run-php80-tests
-	make run-php81-tests
 	make run-php82-tests
-
-run-php73-tests:
-	docker run --rm -v `pwd`/:/app php:7.3 /app/vendor/phpunit/phpunit/phpunit --testdox --bootstrap /app/vendor/autoload.php /app/test/phpunit
-
-run-php74-tests:
-	docker run --rm -v `pwd`/:/app php:7.4 /app/vendor/phpunit/phpunit/phpunit --testdox --bootstrap /app/vendor/autoload.php /app/test/phpunit
-
-run-php80-tests:
-	docker run --rm -v `pwd`/:/app php:8.0 /app/vendor/phpunit/phpunit/phpunit --testdox --bootstrap /app/vendor/autoload.php /app/test/phpunit
-
-run-php81-tests:
-	docker run --rm -v `pwd`/:/app php:8.1 /app/vendor/phpunit/phpunit/phpunit --testdox --bootstrap /app/vendor/autoload.php /app/test/phpunit
+	make run-php83-tests
+	make run-php84-tests
 
 run-php82-tests:
 	docker run --rm -v `pwd`/:/app php:8.2 /app/vendor/phpunit/phpunit/phpunit --testdox --bootstrap /app/vendor/autoload.php /app/test/phpunit
+
+run-php83-tests:
+	docker run --rm -v `pwd`/:/app php:8.3 /app/vendor/phpunit/phpunit/phpunit --testdox --bootstrap /app/vendor/autoload.php /app/test/phpunit
+
+run-php84-tests:
+	docker run --rm -v `pwd`/:/app php:8.4 /app/vendor/phpunit/phpunit/phpunit --testdox --bootstrap /app/vendor/autoload.php /app/test/phpunit

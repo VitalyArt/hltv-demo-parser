@@ -13,6 +13,7 @@ readonly class Demo
         private int $netProtocol,
         private string $mapName,
         private string $clientName,
+        /** @var Entry[] */
         private array $entries,
         private DateTimeImmutable|null $startTime,
         private DateTimeImmutable|null $endTime,
