@@ -15,5 +15,11 @@ run-php82-tests:
 run-php83-tests:
 	docker run --rm -v `pwd`/:/app php:8.3 /app/vendor/phpunit/phpunit/phpunit --testdox --bootstrap /app/vendor/autoload.php /app/test/phpunit
 
+docs-build:
+	npm run docs:build
+
+docs-build-deploy:
+	DOCS_BASE=/hltv-demo-parser/ npm run docs:build
+
 run-php84-tests:
 	docker run --rm -v `pwd`/:/app php:8.4 /app/vendor/phpunit/phpunit/phpunit --testdox --bootstrap /app/vendor/autoload.php /app/test/phpunit
