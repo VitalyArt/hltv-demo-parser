@@ -1,4 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48">
-  <rect width="48" height="48" rx="8" fill="#d32f2f"/>
-  <text x="24" y="32" font-family="Arial, sans-serif" font-size="22" font-weight="bold" fill="white" text-anchor="middle">HD</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title desc">
+  <title id="title">HLTV Demo Parser</title>
+  <desc id="desc">GoldSrc demo file with a playback marker and parsed metadata rows.</desc>
+  <rect width="64" height="64" rx="14" fill="#172027"/>
+  <path d="M18 12h21l9 9v31H18z" fill="#f7fbfd"/>
+  <path d="M39 12v10h9z" fill="#d9e1e7"/>
+  <path d="M25 25l12 7-12 7z" fill="#c83f22"/>
+  <path d="M23 45h22M23 50h15" stroke="#2f7d68" stroke-width="4" stroke-linecap="round"/>
+  <path d="M13 17v34a6 6 0 0 0 6 6h31" fill="none" stroke="#2f7d68" stroke-width="4" stroke-linecap="round"/>
 </svg>

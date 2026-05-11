@@ -8,13 +8,13 @@
 Either run:
 
 ```shell
-$ composer require vitalyart/hltv-demo-parser "*"
+composer require vitalyart/hltv-demo-parser
 ```
 
 or add:
 
 ```json
-"vitalyart/hltv-demo-parser": "*"
+"vitalyart/hltv-demo-parser": "^3.0"
 ```
 
 to the `require` section of your `composer.json` file and run `composer install`.

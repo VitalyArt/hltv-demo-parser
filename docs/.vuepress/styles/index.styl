@@ -1,35 +1,109 @@
-.home .hero img
-  max-width: 100%
-  margin: 2rem auto
+body
+  background: #f6f8fa
 
-.home .hero .description
-  max-width: 36rem
-  margin: 1rem auto
-  font-size: 1.2rem
+.navbar
+  border-bottom: 1px solid rgba(23, 32, 39, 0.08)
+  box-shadow: 0 8px 24px rgba(16, 24, 33, 0.05)
 
-.home .features
-  border-top: 1px solid $borderColor
-  padding: 2.5rem 0
-
-.home .feature
-  text-align: center
-  padding: 1.5rem
-
-.home .feature h2
-  font-size: 1.4rem
-  font-weight: 600
-  margin-bottom: 0.75rem
-  color: $accentColor
-
-.home .feature p
-  color: lighten($textColor, 15%)
+.navbar .site-name
+  color: $textColor
+  font-weight: 800
 
 .navbar .logo
-  border-radius: 4px
+  border-radius: 6px
+
+.home
+  padding: 0 2rem
+
+.home .hero
+  max-width: $homePageWidth
+  min-height: 430px
+  margin: 0 auto
+  padding: 4rem 0 3rem
+  display: grid
+  grid-template-columns: 180px minmax(0, 1fr)
+  gap: 2.5rem
+  align-items: center
+  text-align: left
+
+.home .hero img
+  max-width: 180px
+  margin: 0
+  filter: drop-shadow(0 18px 30px rgba(35, 48, 59, 0.18))
+
+.home .hero h1
+  margin: 0
+  color: $textColor
+  font-size: 3.35rem
+  line-height: 1.04
+  letter-spacing: 0
+
+.home .hero .description
+  max-width: 40rem
+  margin: 1.15rem 0 1.6rem
+  color: #4d5c68
+  font-size: 1.18rem
+  line-height: 1.65
+
+.home .hero .action-button
+  border-radius: 6px
+  border: 0
+  background: $accentColor
+  box-shadow: 0 12px 24px rgba(200, 63, 34, 0.22)
+  font-weight: 700
+
+.home .hero .action-button:hover
+  background: darken($accentColor, 8%)
+
+.home .features
+  max-width: $homePageWidth
+  margin: 0 auto
+  border-top: 1px solid $borderColor
+  padding: 2.5rem 0 1.5rem
+  display: grid
+  grid-template-columns: repeat(4, minmax(0, 1fr))
+  gap: 1rem
+
+.home .feature
+  min-width: 0
+  text-align: left
+  padding: 1.25rem
+  background: #ffffff
+  border: 1px solid rgba(23, 32, 39, 0.08)
+  border-radius: 8px
+  box-shadow: 0 12px 28px rgba(16, 24, 33, 0.06)
+
+.home .feature h2
+  margin: 0 0 0.65rem
+  color: $textColor
+  font-size: 1.05rem
+  font-weight: 800
+  border-bottom: 0
+
+.home .feature p
+  margin: 0
+  color: #586775
+  line-height: 1.58
+
+.home .theme-default-content:not(.custom)
+  max-width: $homePageWidth
+  padding-top: 0
+
+.home .theme-default-content pre
+  margin: 1.5rem 0 0
+  border-radius: 8px
+  box-shadow: 0 16px 36px rgba(16, 24, 33, 0.12)
 
 table
   display: table
   width: 100%
+  overflow: hidden
+  border-radius: 8px
+  background: #ffffff
+  box-shadow: 0 8px 22px rgba(16, 24, 33, 0.04)
+
+th
+  background: #eef3f5
 
 .custom-block.tip
   border-color: $accentColor
@@ -41,8 +115,8 @@ table
   font-weight: 600
 
 code
-  color: #e53935
-  background-color: #fce4ec
+  color: #b83224
+  background-color: #fff0e8
   font-size: 0.85em
   padding: 0.2em 0.4em
   border-radius: 3px
@@ -51,6 +125,10 @@ pre code
   color: inherit
   background-color: transparent
   padding: 0
+
+.theme-default-content pre,
+.theme-default-content pre[class*="language-"]
+  border-radius: 8px
 
 .content:not(.custom)
   max-width: $contentWidth
@@ -63,3 +141,38 @@ pre code
 
 .navbar .links
   font-size: 0.9rem
+
+@media (max-width: 959px)
+  .home
+    padding: 0 1.5rem
+
+  .home .hero
+    grid-template-columns: 1fr
+    min-height: 0
+    gap: 1.5rem
+    padding: 3rem 0 2rem
+    text-align: center
+
+  .home .hero img
+    max-width: 132px
+    margin: 0 auto
+
+  .home .hero h1
+    font-size: 2.45rem
+
+  .home .hero .description
+    margin-left: auto
+    margin-right: auto
+
+  .home .features
+    grid-template-columns: repeat(2, minmax(0, 1fr))
+
+@media (max-width: 560px)
+  .home
+    padding: 0 1rem
+
+  .home .hero h1
+    font-size: 2rem
+
+  .home .features
+    grid-template-columns: 1fr
