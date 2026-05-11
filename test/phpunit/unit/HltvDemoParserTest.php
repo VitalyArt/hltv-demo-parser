@@ -7,7 +7,9 @@ namespace phpunit\unit;
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 use VitalyArt\DemoParser\Demo;
+use VitalyArt\DemoParser\DemoFrame;
 use VitalyArt\DemoParser\Enums\EntryTypeEnum;
+use VitalyArt\DemoParser\Enums\MacroTypeEnum;
 use VitalyArt\DemoParser\Entry;
 use VitalyArt\DemoParser\Exceptions\FileNotExistsException;
 use VitalyArt\DemoParser\Exceptions\FileNotSpecifiedException;
@@ -92,6 +94,7 @@ class HltvDemoParserTest extends TestCase
         $duration = $demo->getDuration();
         $this->assertIsInt($duration);
         $this->assertGreaterThan(0, $duration);
+        $this->assertEquals(2891, $duration);
     }
 
     public function testGetMapName(): void
@@ -169,6 +172,49 @@ class HltvDemoParserTest extends TestCase
         $this->assertInstanceOf(Demo::class, $demo);
         $this->assertIsArray($demo->getEntries());
         $this->assertCount(0, $demo->getEntries());
+    }
+
+    public function testGetMapCrc(): void
+    {
+        $this->setValidDemo();
+        $demo = $this->parser->getDemo();
+        $this->assertIsInt($demo->getMapCrc());
+    }
+
+    public function testGetGameDirectory(): void
+    {
+        $this->setValidDemo();
+        $demo = $this->parser->getDemo();
+        $this->assertIsString($demo->getGameDirectory());
+        $this->assertNotEmpty($demo->getGameDirectory());
+    }
+
+    public function testLoadingEntryParsedFrames(): void
+    {
+        $this->setValidDemo();
+        $demo = $this->parser->getDemo();
+        $entry = $demo->getEntries()['loading'];
+        $frames = $entry->getParsedFrames();
+        $this->assertIsArray($frames);
+        $this->assertGreaterThan(0, count($frames));
+    }
+
+    public function testLoadingParsedFramesStructure(): void
+    {
+        $this->setValidDemo();
+        $demo = $this->parser->getDemo();
+        $frames = $demo->getEntries()['loading']->getParsedFrames();
+
+        $this->assertContainsOnlyInstancesOf(DemoFrame::class, $frames);
+
+        $first = $frames[0];
+        $this->assertInstanceOf(MacroTypeEnum::class, $first->getType());
+        $this->assertIsFloat($first->getTime());
+        $this->assertIsInt($first->getFrame());
+        $this->assertIsInt($first->getPayloadLength());
+
+        $last = $frames[count($frames) - 1];
+        $this->assertSame(MacroTypeEnum::LAST_IN_SEGMENT, $last->getType());
     }
 
     protected function setValidDemo(): void

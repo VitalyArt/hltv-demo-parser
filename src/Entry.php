@@ -8,6 +8,7 @@ use VitalyArt\DemoParser\Enums\EntryTypeEnum;
 
 readonly class Entry
 {
+    /** @param DemoFrame[] $parsedFrames */
     public function __construct(
         private EntryTypeEnum $type,
         private int $typeNumber,
@@ -18,80 +19,59 @@ readonly class Entry
         private int $frames,
         private int $offset,
         private int $fileLength,
+        private array $parsedFrames = [],
     )
     {
-
     }
 
-    /**
-     * Entry type
-     */
     public function getTypeString(): EntryTypeEnum
     {
         return $this->type;
     }
 
-    /**
-     * Integer entry type
-     */
     public function getType(): int
     {
         return $this->typeNumber;
     }
 
-    /**
-     * Description
-     */
     public function getDescription(): string
     {
         return $this->description;
     }
 
-    /**
-     * Flags
-     */
     public function getFlags(): int
     {
         return $this->flags;
     }
 
-    /**
-     * CD track
-     */
     public function getCDTrack(): int
     {
         return $this->CDTrack;
     }
 
-    /**
-     * Track time
-     */
     public function getTrackTime(): float
     {
         return $this->trackTime;
     }
 
-    /**
-     * Frames
-     */
     public function getFrames(): int
     {
         return $this->frames;
     }
 
-    /**
-     * Offset
-     */
     public function getOffset(): int
     {
         return $this->offset;
     }
 
-    /**
-     * File length
-     */
     public function getFileLength(): int
     {
         return $this->fileLength;
+    }
+
+    /** @return DemoFrame[] */
+    public function getParsedFrames(): array
+    {
+        return $this->parsedFrames;
     }
 }

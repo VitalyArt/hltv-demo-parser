@@ -9,7 +9,7 @@ features:
 - title: Reads GoldSrc demos
   details: Supports .dem files from HLTV, Counter-Strike 1.6, Half-Life, Team Fortress Classic, Day of Defeat, and compatible mods.
 - title: Extracts useful metadata
-  details: Returns protocol versions, map name, client name, start and end time, playback duration, and parsed entry details.
+  details: Returns protocol versions, map name, map CRC, game directory, client name, start and end time, playback duration, parsed entries, and macro block frames.
 - title: Small PHP API
   details: Built for PHP 8.2+ with PSR-4 autoloading, readonly DTOs, backed enums, typed exceptions, and only ext-mbstring required.
 - title: Predictable failures

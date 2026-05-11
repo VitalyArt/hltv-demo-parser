@@ -2,7 +2,7 @@
 
 The parser throws exceptions when something goes wrong. All exceptions extend `\VitalyArt\DemoParser\Exceptions\ParserException`.
 
-### Exception hierarchy
+## Exception hierarchy
 
 ```
 \Exception
@@ -14,7 +14,7 @@ The parser throws exceptions when something goes wrong. All exceptions extend `\
     └── IsNotADemoException
 ```
 
-### Basic error handling
+## Basic error handling
 
 ```php
 $parser = new \VitalyArt\DemoParser\Parser();
@@ -35,7 +35,7 @@ try {
 }
 ```
 
-### Catching all parser errors
+## Catching all parser errors
 
 If you don't need granular control, catch the base exception:
 
@@ -48,7 +48,7 @@ try {
 }
 ```
 
-### Common pitfalls
+## Common pitfalls
 
 | Scenario | Exception |
 |---|---|

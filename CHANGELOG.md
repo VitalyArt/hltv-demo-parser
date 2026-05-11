@@ -1,3 +1,14 @@
+# v3.1.0
+- `Demo::getDuration()` now derives from the `LAST_IN_SEGMENT` DemoFrame timestamp in the PLAYBACK data segment (falls back to entry `trackTime`)
+- New `Demo::getMapCrc()` — returns the map CRC from the demo header
+- New `Demo::getGameDirectory()` — returns the game directory (e.g. `cstrike`)
+- New `Entry::getParsedFrames(): DemoFrame[]` — parsed macro block headers:
+  - LOADING entries: all sequential macro blocks
+  - PLAYBACK entries: LAST_IN_SEGMENT frame found by scanning the end of the segment
+- New `DemoFrame` class — represents a single macro block (type, time, frame, payload length)
+- New `MacroTypeEnum` — 10 macro types (0–9) used in GoldSrc demo files
+- Fixed entry table parsing: corrected `SIZE_ENTRY` to 92 bytes; entries now start properly after the count field
+
 # v3.0.2
 - Refactor Parser: add constants, fix type safety, improve tests
 

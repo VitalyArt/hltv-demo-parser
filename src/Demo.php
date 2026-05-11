@@ -8,19 +8,20 @@ use DateTimeImmutable;
 
 readonly class Demo
 {
+    /** @param Entry[] $entries */
     public function __construct(
         private int $demoProtocol,
         private int $netProtocol,
         private string $mapName,
         private string $clientName,
-        /** @var Entry[] */
         private array $entries,
         private DateTimeImmutable|null $startTime,
         private DateTimeImmutable|null $endTime,
         private int|false $duration,
+        private int $mapCrc = 0,
+        private string $gameDirectory = '',
     )
     {
-
     }
 
     public function getDemoProtocol(): int
@@ -43,9 +44,7 @@ readonly class Demo
         return $this->clientName;
     }
 
-    /**
-     * @return Entry[]
-     */
+    /** @return Entry[] */
     public function getEntries(): array
     {
         return $this->entries;
@@ -64,5 +63,15 @@ readonly class Demo
     public function getDuration(): int|false
     {
         return $this->duration;
+    }
+
+    public function getMapCrc(): int
+    {
+        return $this->mapCrc;
+    }
+
+    public function getGameDirectory(): string
+    {
+        return $this->gameDirectory;
     }
 }

@@ -1,6 +1,4 @@
-## Contributing
-
-### Setup
+## Setup
 
 Clone the repository and install dependencies:
 
@@ -10,7 +8,7 @@ cd hltv-demo-parser
 composer install
 ```
 
-### Running Tests
+## Running Tests
 
 Run PHPUnit tests:
 
@@ -20,7 +18,7 @@ Run PHPUnit tests:
 
 Tests are located in `test/phpunit/unit/`. Make sure all tests pass before submitting changes.
 
-### Static Analysis
+## Static Analysis
 
 Run PHPStan (level 6):
 
@@ -30,7 +28,7 @@ Run PHPStan (level 6):
 
 PHPStan configuration is in `phpstan.neon`.
 
-### Building Documentation
+## Building Documentation
 
 The documentation uses VuePress. To preview locally:
 
@@ -47,7 +45,7 @@ npm run docs:build
 
 The output is placed in `docs/.vuepress/dist/`.
 
-### Pull Request Checklist
+## Pull Request Checklist
 
 - [ ] All tests pass (`./vendor/bin/phpunit --testdox --bootstrap vendor/autoload.php test/phpunit`)
 - [ ] PHPStan reports no errors (`./vendor/bin/phpstan analyse`)
