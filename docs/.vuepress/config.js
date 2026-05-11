@@ -4,10 +4,10 @@ module.exports = {
   title: 'HLTV Demo Parser',
   description: 'Parse GoldSrc engine demo files (Half-Life, CS 1.6, TFC, DoD) with PHP',
   head: [
-    ['link', { rel: 'icon', href: (process.env.DOCS_BASE || '/') + 'logo.svg' }],
+    ['link', { rel: 'icon', href: '/logo.svg' }],
   ],
   themeConfig: {
-    logo: (process.env.DOCS_BASE || '/') + 'logo.svg',
+    logo: '/logo.svg',
     displayAllHeaders: true,
     navbar: true,
     smoothScroll: true,
